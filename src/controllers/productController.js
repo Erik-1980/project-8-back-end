@@ -2,10 +2,10 @@ const Product = require('../models/ProductsModel');
 
 // Создание нового продукта
 exports.createProducts = async (req, res, next) => { //+
-  const { name, price, quantity, image, description, categoryId } = req.body;
+  const { name, model, price, quantity, image, description, categoryId } = req.body;
   console.log(req.body);
   try {
-    await Product.createProduct(name, price, quantity, image, description, categoryId);
+    await Product.createProduct(name, model, price, quantity, image, description, categoryId);
     res.status(201).json({ message: 'Product created successfully!' });
   } catch (err) {
     next(err);
@@ -26,7 +26,6 @@ exports.createCategories = async (req, res, next) => { //+
 // Получение информации о продукте
 exports.getOneProduct = async (req, res, next) => {
   const { value } = req.body;
-  console.log(value);
   try {
     const product = await Product.getProduct(value);
     if (!product) {
@@ -61,10 +60,10 @@ exports.getCategories = async (req, res, next) => {
 
 // Обновление продукта по id
 exports.updateProduct = async (req, res, next) => {
-  const { id, name, price, quantity, image, description, categoryId } = req.body;
+  const { id, name, model, price, quantity, image, description, categoryId } = req.body;
   console.log(id, name, price, quantity, image, description, categoryId);
   try {
-    await Product.updateProduct(id, name, price, quantity, image, description, categoryId);
+    await Product.updateProduct(id, name, model, price, quantity, image, description, categoryId);
     res.status(200).json({ message: 'Product updated successfully'});
   } catch (err) {
     next(err);

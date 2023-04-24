@@ -69,6 +69,10 @@ const Products = sequelize.define('products', {
         allowNull: false,
         unique: true
     },
+    model: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     price: {
         type: Sequelize.FLOAT,
         allowNull: false
@@ -156,7 +160,6 @@ sequelize.sync()
     });
 
 module.exports = {
-    sequelize,
     Users,
     Products,
     Categories,
