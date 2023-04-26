@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/productController');
 const adminMiddleware = require('../middlewares/adminMiddleware');
+const upload = require('../middlewares/multer');
 
 // Получение списка всех продуктов
 router.get('/', adminMiddleware, productController.getProducts);
 
 // Создание нового продукта
-router.post('/', adminMiddleware, productController.createProducts);
+router.post('/', adminMiddleware, upload.single('image'), productController.createProducts);
 
 // Создание новой категории
 router.post('/category', adminMiddleware, productController.createCategories);

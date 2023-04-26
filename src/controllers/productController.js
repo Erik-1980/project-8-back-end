@@ -1,10 +1,13 @@
 const Product = require('../models/ProductsModel');
+const path = require('path');
+
 
 // Создание нового продукта
-exports.createProducts = async (req, res, next) => { //+
-  const { name, model, price, quantity, image, description, categoryId } = req.body;
-  console.log(req.body);
+exports.createProducts =  async (req, res, next) => {
   try {
+    const { name, model, price, quantity, description, categoryId } = req.body;
+    const image = req.file && req.file.path;
+
     await Product.createProduct(name, model, price, quantity, image, description, categoryId);
     res.status(201).json({ message: 'Product created successfully!' });
   } catch (err) {
@@ -31,7 +34,6 @@ exports.getOneProduct = async (req, res, next) => {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-
     res.status(200).json({ product });
   } catch (err) {
     next(err);
