@@ -67,7 +67,6 @@ const Products = sequelize.define('products', {
     name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
     },
     model: {
         type: Sequelize.STRING,
@@ -145,11 +144,17 @@ const Carts = sequelize.define('carts', {
 });
 
 Users.hasOne(Carts);
-Carts.belongsTo(Users);
+Carts.belongsTo(Users, {
+    onDelete: 'CASCADE'
+  });
 Categories.hasMany(Products);
-Products.belongsTo(Categories);
+Products.belongsTo(Categories, {
+    onDelete: 'CASCADE'
+  });
 Users.hasMany(Orders);
-Orders.belongsTo(Users);
+Orders.belongsTo(Users, {
+    onDelete: 'CASCADE'
+  });
 
 sequelize.sync()
     .then(() => {

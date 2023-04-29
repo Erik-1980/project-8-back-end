@@ -1,15 +1,21 @@
+const { log } = require('console');
 const Product = require('../models/ProductsModel');
 const path = require('path');
 
 
 // Создание нового продукта
 exports.createProducts =  async (req, res, next) => {
+  const { name, model, price, quantity, description, categoryId } = req.body;
+  const image = req.file && req.file.path;
   try {
-    const { name, model, price, quantity, description, categoryId } = req.body;
-    const image = req.file && req.file.path;
-
+    const repeat_name = await Product.getProduct(name);
+    if(repeat_name){
+      if(repeat_name.name===name && repeat_name.model===model && repeat_name.categoryId==categoryId){
+        return res.status(409).json({ message: 'A similar product already exists!'});
+      };
+    };
     await Product.createProduct(name, model, price, quantity, image, description, categoryId);
-    res.status(201).json({ message: 'Product created successfully!' });
+    res.status(201).json({ message: 'Product created successfully!'});
   } catch (err) {
     next(err);
   }
@@ -19,8 +25,13 @@ exports.createProducts =  async (req, res, next) => {
 exports.createCategories = async (req, res, next) => { //+
   const { name, description } = req.body;
   try {
+    const repeat_name = await Product.getCategory(name);
+    console.log(repeat_name)
+    if(repeat_name){
+      return res.status(201).json({ message: 'A category with this name already exists!'});
+    }
     await Product.createCategory(name, description);
-    res.status(201).json({ message: 'Category created successfully!' });
+    res.status(201).json({ message: 'Category created successfully!'});
   } catch (err) {
     next(err);
   }

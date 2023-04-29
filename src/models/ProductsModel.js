@@ -79,6 +79,20 @@ const getProduct = async (value) => {
   }
 };
 
+const getCategory = async (value) => {
+  try {
+    const category = await Categories.findOne({
+      attributes: ['name'],
+      where: {
+        name: value 
+      }
+    });
+    return category;
+  } catch (error) {
+    throw new Error(`Failed to get category: ${error.message}`);
+  }
+};
+
 const updateProduct = async (id, name, model, price, quantity, image, description, categoryId) => {
   try {
     const updatedProduct = await Products.update(
@@ -114,6 +128,7 @@ module.exports = {
   createCategory,
   getAllProducts,
   getProduct,
+  getCategory,
   getAllCategories,
   updateProduct,
   deleteProductById,

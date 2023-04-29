@@ -18,6 +18,7 @@ app.get('/images/:name',(req,res)=>{
       });
 })
 
+
 app.use(express.json());
 app.use(cors());
 
