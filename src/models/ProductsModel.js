@@ -1,9 +1,9 @@
 const { Products } = require('./db');
 const { Categories } = require('./db');
 
-const createProduct = async (name, model, price, quantity, image, description, categoryId) => { //+
+const createProduct = async (brand, name, model, price, quantity, image, description, categoryId) => { //+
   try {
-    const newProduct = await Products.create({ name, model, price, quantity, image, description, categoryId });
+    const newProduct = await Products.create({ brand, name, model, price, quantity, image, description, categoryId });
     return newProduct;
   } catch (error) {
     throw new Error(`Failed to create product: ${error.message}`);
@@ -93,10 +93,10 @@ const getCategory = async (value) => {
   }
 };
 
-const updateProduct = async (id, name, model, price, quantity, image, description, categoryId) => {
+const updateProduct = async (id, brand, name, model, price, quantity, image, description, categoryId) => {
   try {
     const updatedProduct = await Products.update(
-      { name, model, price, quantity, image, description, categoryId },
+      { brand, name, model, price, quantity, image, description, categoryId },
       { where: { id } }
     );
     return updatedProduct;

@@ -64,6 +64,10 @@ const Products = sequelize.define('products', {
         primaryKey: true,
         autoIncrement: true
     },
+    brand: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
     name: {
         type: Sequelize.STRING,
         allowNull: false,

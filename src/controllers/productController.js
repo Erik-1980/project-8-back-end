@@ -5,16 +5,16 @@ const path = require('path');
 
 // Создание нового продукта
 exports.createProducts =  async (req, res, next) => {
-  const { name, model, price, quantity, description, categoryId } = req.body;
+  const { brand, name, model, price, quantity, description, categoryId } = req.body;
   const image = req.file && req.file.path;
   try {
     const repeat_name = await Product.getProduct(name);
     if(repeat_name){
-      if(repeat_name.name===name && repeat_name.model===model && repeat_name.categoryId==categoryId){
+      if(repeat_name.brand===brand && repeat_name.name===name && repeat_name.model===model && repeat_name.categoryId==categoryId){
         return res.status(409).json({ message: 'A similar product already exists!'});
       };
     };
-    await Product.createProduct(name, model, price, quantity, image, description, categoryId);
+    await Product.createProduct(brand, name, model, price, quantity, image, description, categoryId);
     res.status(201).json({ message: 'Product created successfully!'});
   } catch (err) {
     next(err);
@@ -73,10 +73,9 @@ exports.getCategories = async (req, res, next) => {
 
 // Обновление продукта по id
 exports.updateProduct = async (req, res, next) => {
-  const { id, name, model, price, quantity, image, description, categoryId } = req.body;
-  console.log(id, name, price, quantity, image, description, categoryId);
+  const { id, brand, name, model, price, quantity, image, description, categoryId } = req.body;
   try {
-    await Product.updateProduct(id, name, model, price, quantity, image, description, categoryId);
+    await Product.updateProduct(id, brand, name, model, price, quantity, image, description, categoryId);
     res.status(200).json({ message: 'Product updated successfully'});
   } catch (err) {
     next(err);
