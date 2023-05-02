@@ -10,13 +10,14 @@ const productRoutes = require("./routes/productRoute");
 const userRoutes = require("./routes/userRoute");
 
 app.get('/images/:name',(req,res)=>{
-    const image_name = req.params.name
+    const image_name = req.params.name;
+    
     fs.readFile(`./images/${image_name}`, function(err, data) {
         if (err) throw err;
           res.writeHead(200, {'Content-Type': 'image/jpeg'});
           res.end(data); 
       });
-})
+});
 
 
 app.use(express.json());

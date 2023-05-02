@@ -1,6 +1,5 @@
-const { log } = require('console');
 const Product = require('../models/ProductsModel');
-const path = require('path');
+const fs = require('fs');
 
 
 // Создание нового продукта
@@ -90,7 +89,12 @@ exports.deleteProduct = async (req, res, next) => {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-
+    fs.unlink(`./${product.image}`, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error deleting file');
+      }
+    });
     await Product.deleteProductById(id);
     res.status(200).json({ message: 'Product deleted successfully' });
   } catch (err) {
