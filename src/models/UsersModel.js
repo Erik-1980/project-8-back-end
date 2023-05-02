@@ -48,14 +48,6 @@ const deleteUserById = async (id) => {// +
   }
 };
 
-const updateUserAdminStatus = async (email, isAdmin) => {// +
-  try {
-    const updatedUser = await Users.update({ isAdmin }, { where: { email } });
-    return updatedUser;
-  } catch (error) {
-    throw new Error(`Failed to update user admin status: ${error.message}`);
-  }
-};
 
 module.exports = {
   createUser,
@@ -63,5 +55,4 @@ module.exports = {
   findAllUsers,
   findById,
   deleteUserById,
-  updateUserAdminStatus
 };

@@ -60,7 +60,7 @@ exports.deleteFromCart = async (req, res, next) => {
       product.quantity -= 1;
       await Cart.updateQuantity(decodedToken.userId, req.params.id, product.quantity)
     } else {
-      await Cart.deleteByUserIdAndProductId(decodedToken.userId, req.params.id )
+      await Cart.deleteCartByUserIdAndProductId(decodedToken.userId, req.params.id )
     }
     res.status(201).json({ message: 'product removed from cart!'})
   } catch (error) {
@@ -80,7 +80,7 @@ exports.deleteAllFromCart = async (req, res, next) => {
     if (product.length===0) {
       return res.status(404).json({ error: 'Product not found' });
     }
-      await Cart.deleteAllByUserId(decodedToken.userId)
+      await Cart.deleteAllCartsByUserId(decodedToken.userId)
     res.status(201).json({ message: 'products removed from cart!'})
   } catch (error) {
     next(error);
